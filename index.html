@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TINA-AI-MARIENHOF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Segoe UI', 'sans-serif'],
+            },
+            colors: {
+              // Neue helle Palette & Dark Theme extensions
+              marien: {
+                950: '#00211a', // Extra Dark Teal (Background) - Darkened further
+                900: '#134e4a', // Deep Teal (Text)
+                800: '#115e59', // Dark Teal
+                700: '#0f766e',
+                600: '#0d9488',
+                500: '#14b8a6', // Primary Brand (Teal)
+                400: '#2dd4bf',
+                300: '#5eead4',
+                200: '#99f6e4',
+                100: '#ccfbf1', // Very light background
+                50: '#f0fdfa',  // Almost white
+              },
+              fun: {
+                pink: '#ec4899',
+                orange: '#f97316',
+                yellow: '#eab308',
+                blue: '#3b82f6',
+                purple: '#a855f7'
+              },
+              base: {
+                white: '#ffffff',
+                50: '#f8fafc', // Light gray
+                100: '#f1f5f9',
+                200: '#e2e8f0', // Borders
+                300: '#cbd5e1',
+                800: '#1e293b', // Main Text
+                900: '#0f172a', // Dark Text
+              }
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'card': '0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
+              'float': '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+              'glow': '0 0 30px rgba(20, 184, 166, 0.4)',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      
+      @media print {
+        @page {
+          margin: 10mm;
+          size: auto; 
+        }
+        
+        /* Named pages for orientation switching */
+        @page portrait-page {
+          size: A4 portrait;
+          margin: 15mm;
+        }
+        
+        @page landscape-page {
+          size: A4 landscape;
+          margin: 10mm;
+        }
+
+        body { 
+          background-color: white !important; 
+          color: black !important; 
+          -webkit-print-color-adjust: exact !important; 
+          print-color-adjust: exact !important;
+        }
+        
+        /* Hide non-print elements globally if tagged */
+        .no-print { display: none !important; }
+        
+        /* Utilities to force print visibility */
+        .print-only { display: block !important; }
+        
+        /* Apply page names */
+        .print-portrait-wrapper {
+          page: portrait-page;
+        }
+        
+        .print-landscape-wrapper {
+          page: landscape-page;
+          width: 100%;
+        }
+
+        /* Reset text colors for print to save ink and ensure contrast */
+        .print-text-black { color: black !important; }
+        .print-border-black { border-color: black !important; }
+      }
+      
+      /* Default state: Hide print-only elements on screen */
+      .print-only { display: none; }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f0fdfa; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #115e59; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2dd4bf; 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.4.1",
+    "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.6.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-marien-50 text-base-800 h-screen w-screen overflow-x-hidden">
+    <div id="root" class="h-full w-full"></div>
+  </body>
+</html>
