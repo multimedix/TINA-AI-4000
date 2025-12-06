@@ -70,13 +70,13 @@ const BottomNav: React.FC<Props> = ({ currentPage, onNavigate, onAction }) => {
       </div>
 
       {/* MAIN BAR */}
-      <div className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-xl border-t border-gray-200 pb-safe pt-2 px-6 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] print:hidden">
+      <div className="fixed bottom-0 left-0 w-full bg-marien-900/90 backdrop-blur-xl border-t border-gray-200 pb-safe pt-2 px-6 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] print:hidden">
         <div className="flex justify-between items-center max-w-lg mx-auto h-20 relative">
             
             {/* Left Items */}
             <button 
                 onClick={() => handleNav('calendar')}
-                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'calendar' ? 'text-marien-600 scale-110' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'calendar' ? 'text-marien-600 scale-110' : 'text-marien-300 hover:text-marien-100'}`}
             >
                 <span className="text-2xl">📝</span>
                 <span className="text-[9px] font-bold uppercase tracking-wider">Start</span>
@@ -84,7 +84,7 @@ const BottomNav: React.FC<Props> = ({ currentPage, onNavigate, onAction }) => {
 
             <button 
                 onClick={() => handleNav('protocol')}
-                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'protocol' ? 'text-marien-600 scale-110' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'protocol' ? 'text-marien-600 scale-110' : 'text-marien-300 hover:text-marien-100'}`}
             >
                 <span className="text-2xl">📊</span>
                 <span className="text-[9px] font-bold uppercase tracking-wider">Daten</span>
@@ -105,7 +105,7 @@ const BottomNav: React.FC<Props> = ({ currentPage, onNavigate, onAction }) => {
             {/* Right Items */}
             <button 
                 onClick={() => handleNav('mood')}
-                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'mood' ? 'text-marien-600 scale-110' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'mood' ? 'text-marien-600 scale-110' : 'text-marien-300 hover:text-marien-100'}`}
             >
                 <span className="text-2xl">🧘‍♀️</span>
                 <span className="text-[9px] font-bold uppercase tracking-wider">Mood</span>
@@ -113,7 +113,7 @@ const BottomNav: React.FC<Props> = ({ currentPage, onNavigate, onAction }) => {
 
             <button 
                 onClick={() => handleNav('info')}
-                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'info' ? 'text-marien-600 scale-110' : 'text-gray-400 hover:text-gray-600'}`}
+                className={`flex flex-col items-center gap-1 w-16 transition-all ${currentPage === 'info' ? 'text-marien-600 scale-110' : 'text-marien-300 hover:text-marien-100'}`}
             >
                 <span className="text-2xl">📚</span>
                 <span className="text-[9px] font-bold uppercase tracking-wider">Info</span>

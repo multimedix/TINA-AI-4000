@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useMemo } from 'react';
 import { ArbeitsEintrag, Notiz, KalenderEintrag, KalenderTyp, DienstTyp, Bewertung } from '../types';
 import { getEntryByDate, createDefaultEntry, getCalendarEvents, getEntries } from '../services/storageService';
@@ -19,7 +18,6 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
   // Daily State
   const [entry, setEntry] = useState<ArbeitsEintrag | null>(null);
   const [dayEvents, setDayEvents] = useState<KalenderEintrag[]>([]);
-  
   // Weekly Data State
   const [weekEntries, setWeekEntries] = useState<ArbeitsEintrag[]>([]);
   const [weekEvents, setWeekEvents] = useState<KalenderEintrag[]>([]);
@@ -300,38 +298,74 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
   if (!entry) return <div className="text-marien-900 text-center mt-20">Lade Protokoll...</div>;
 
   return (
-    <div className="flex flex-col items-center w-full bg-gray-100 min-h-screen pt-4 md:pt-8 pb-32">
+    <div className="flex flex-col items-center w-full bg-marien-950 min-h-screen pt-4 md:pt-8 pb-32">
       
       {/* TABS HEADER (Screen Only) */}
-      <div className="no-print w-full max-w-[210mm] mb-6 flex bg-white rounded-2xl p-1 shadow-sm border border-gray-200">
+      <div 
+        className="no-print w-full max-w-6xl mx-auto mb-8 bg-marien-900/70 backdrop-blur-md p-2 rounded-3xl shadow-float border border-marien-700 flex gap-x-4 transition-all duration-300 transform translate-y-0"
+        role="tablist"
+      >
           <button 
              onClick={() => setActiveTab('daily')}
-             className={`flex-1 py-3 rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all ${activeTab === 'daily' ? 'bg-marien-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-600'}`}
+             className={`flex-1 flex items-center justify-center gap-2 md:gap-3 py-3 px-2 md:px-4 rounded-2xl transition-all duration-300 group relative
+               ${activeTab === 'daily' 
+                  ? 'bg-gradient-to-br from-marien-500 to-marien-700 text-white shadow-lg shadow-marien-500/20 transform scale-[1.03] translate-y-[-4px]' 
+                  : 'bg-white text-marien-800 hover:bg-gray-100 border border-gray-100 shadow-sm hover:text-marien-600'}`}
+             role="tab"
+             aria-selected={activeTab === 'daily'}
+             aria-controls="daily-protocol-panel"
           >
-             Tagesprotokoll
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={`w-6 h-6 ${activeTab !== 'daily' ? 'text-marien-400 group-hover:text-marien-600' : ''}`}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+             </svg>
+             <span className="text-sm md:text-base font-black uppercase tracking-widest whitespace-nowrap">Tagesprotokoll</span>
           </button>
+          
           <button 
              onClick={() => setActiveTab('weekly')}
-             className={`flex-1 py-3 rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all ${activeTab === 'weekly' ? 'bg-marien-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-600'}`}
+             className={`flex-1 flex items-center justify-center gap-2 md:gap-3 py-3 px-2 md:px-4 rounded-2xl transition-all duration-300 group relative
+               ${activeTab === 'weekly' 
+                  ? 'bg-gradient-to-br from-marien-500 to-marien-700 text-white shadow-lg shadow-marien-500/20 transform scale-[1.03] translate-y-[-4px]' 
+                  : 'bg-white text-marien-800 hover:bg-gray-100 border border-gray-100 shadow-sm hover:text-marien-600'}`}
+             role="tab"
+             aria-selected={activeTab === 'weekly'}
+             aria-controls="weekly-stats-panel"
           >
-             Wochenstatistik
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={`w-6 h-6 ${activeTab !== 'weekly' ? 'text-marien-400 group-hover:text-marien-600' : ''}`}>
+               <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+             </svg>
+             <span className="text-sm md:text-base font-black uppercase tracking-widest whitespace-nowrap">Wochenstatistik</span>
           </button>
+          
           <button 
              onClick={() => setActiveTab('monthly')}
-             className={`flex-1 py-3 rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all ${activeTab === 'monthly' ? 'bg-marien-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-600'}`}
+             className={`flex-1 flex items-center justify-center gap-2 md:gap-3 py-3 px-2 md:px-4 rounded-2xl transition-all duration-300 group relative
+               ${activeTab === 'monthly' 
+                  ? 'bg-gradient-to-br from-marien-500 to-marien-700 text-white shadow-lg shadow-marien-500/20 transform scale-[1.03] translate-y-[-4px]' 
+                  : 'bg-white text-marien-800 hover:bg-gray-100 border border-gray-100 shadow-sm hover:text-marien-600'}`}
+             role="tab"
+             aria-selected={activeTab === 'monthly'}
+             aria-controls="monthly-stats-panel"
           >
-             Monatsstatistik
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={`w-6 h-6 ${activeTab !== 'monthly' ? 'text-marien-400 group-hover:text-marien-600' : ''}`}>
+               <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+             </svg>
+             <span className="text-sm md:text-base font-black uppercase tracking-widest whitespace-nowrap">Monatsstatistik</span>
           </button>
       </div>
 
       {/* ================================================================================== */}
       {/* VIEW 1: DAILY PROTOCOL (THE PRINT VIEW) */}
       {/* ================================================================================== */}
-      <div className={`${activeTab === 'daily' ? 'block' : 'hidden'} print:block w-full flex flex-col items-center`}>
+      <div 
+        id="daily-protocol-panel"
+        role="tabpanel"
+        className={`${activeTab === 'daily' ? 'block' : 'hidden'} print:block w-full flex flex-col items-center`}
+      >
         
         <div className="print-portrait-wrapper bg-white w-full max-w-[210mm] min-h-[297mm] shadow-2xl print:shadow-none p-[15mm] md:p-[20mm] relative text-slate-800 text-sm leading-normal animate-fade-in mb-8 print:mb-0">
             {/* ... EXISTING PROTOCOL CONTENT ... */}
-            <header className="border-b-2 border-marien-900 pb-4 mb-8 flex justify-between items-end">
+            <header className="border-b-2 border-marien-700 pb-4 mb-8 flex justify-between items-end">
                 <div>
                     <div className="flex items-center gap-2 mb-2 text-marien-600">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -450,11 +484,11 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
         {/* SCREEN ONLY: EXPORT BUTTONS */}
         <div className="w-full max-w-[210mm] mt-8 mb-12 px-4 no-print">
             <DateNavigation onPrev={handlePrevDay} onToday={handleToday} onNext={handleNextDay} />
-            <div className="mt-8 bg-white rounded-2xl shadow-card border border-marien-100 p-6">
-                <h3 className="text-lg font-bold text-marien-900 mb-4 flex items-center gap-2"><span>📤</span> Exportieren & Teilen</h3>
+            <div className="mt-8 bg-marien-900 rounded-2xl shadow-card border border-marien-700 p-6 text-white">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><span>📤</span> Exportieren & Teilen</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button onClick={handlePrint} className="flex flex-col items-center justify-center p-6 rounded-xl bg-gray-50 hover:bg-marien-50 border-2 border-gray-200 hover:border-marien-300 transition-all group"><div className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-2xl shadow-sm mb-3 group-hover:scale-110 transition-transform">🖨️</div><div className="font-bold text-marien-900">Als PDF speichern / Drucken</div><div className="text-xs text-gray-500 mt-1 text-center">Öffnet Druckdialog.<br/>Wähle "Als PDF speichern".</div></button>
-                    <button onClick={handleEmail} className="flex flex-col items-center justify-center p-6 rounded-xl bg-gray-50 hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-300 transition-all group"><div className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-2xl shadow-sm mb-3 group-hover:scale-110 transition-transform">📧</div><div className="font-bold text-blue-900">Per E-Mail vorbereiten</div><div className="text-xs text-gray-500 mt-1 text-center">Öffnet Mail-App. <br/> <span className="text-red-500 font-bold">PDF manuell anhängen!</span></div></button>
+                    <button onClick={handlePrint} className="flex flex-col items-center justify-center p-6 rounded-xl bg-marien-800 hover:bg-marien-700 border-2 border-marien-600 hover:border-marien-500 transition-all group"><div className="w-12 h-12 rounded-full bg-marien-900 border border-marien-700 flex items-center justify-center text-2xl shadow-sm mb-3 group-hover:scale-110 transition-transform">🖨️</div><div className="font-bold text-white">Als PDF speichern / Drucken</div><div className="text-xs text-marien-300 mt-1 text-center">Öffnet Druckdialog.<br/>Wähle "Als PDF speichern".</div></button>
+                    <button onClick={handleEmail} className="flex flex-col items-center justify-center p-6 rounded-xl bg-marien-800 hover:bg-marien-700 border-2 border-marien-600 hover:border-marien-500 transition-all group"><div className="w-12 h-12 rounded-full bg-marien-900 border border-marien-700 flex items-center justify-center text-2xl shadow-sm mb-3 group-hover:scale-110 transition-transform">📧</div><div className="font-bold text-blue-300">Per E-Mail vorbereiten</div><div className="text-xs text-marien-300 mt-1 text-center">Öffnet Mail-App. <br/> <span className="text-red-400 font-bold">PDF manuell anhängen!</span></div></button>
                 </div>
             </div>
         </div>
@@ -463,44 +497,54 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
       {/* ================================================================================== */}
       {/* VIEW 2: WEEKLY STATISTICS (NEW) */}
       {/* ================================================================================== */}
-      {activeTab === 'weekly' && (
-      <div className="w-full max-w-6xl px-4 animate-fade-in">
+      <div 
+        id="weekly-stats-panel"
+        role="tabpanel"
+        className={`${activeTab === 'weekly' ? 'block' : 'hidden'} w-full max-w-6xl px-4 animate-fade-in`}
+      >
           
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-white p-6 rounded-3xl shadow-card border border-gray-100">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-marien-900 p-6 rounded-3xl shadow-float border border-marien-700 text-white">
              <div className="flex flex-col">
-                 <h2 className="text-3xl font-black text-marien-900 uppercase tracking-tight">Wochenstatistik</h2>
-                 <p className="text-marien-500 font-bold">
+                 <h2 className="text-3xl font-black text-white uppercase tracking-tight">Wochenstatistik</h2>
+                 <p className="text-marien-300 font-bold">
                      KW {Math.ceil(((new Date(weekRange.start).getTime() - new Date(new Date(weekRange.start).getFullYear(), 0, 1).getTime()) / 86400000 + 1) / 7)} • {weekRange.start.toLocaleDateString('de-DE')} - {weekRange.end.toLocaleDateString('de-DE')}
                  </p>
              </div>
-             <Button variant="secondary" onClick={() => handleExportCsv(weekEntries, 'wochenexport.csv')} className="!rounded-full shadow-sm">💾 CSV Export (Woche)</Button>
+             <Button 
+                onClick={() => handleExportCsv(weekEntries, 'wochenexport.csv')} 
+                className="bg-marien-700 hover:bg-marien-600 text-white shadow-md shadow-marien-700/30 !rounded-full">
+                💾 CSV Export (Woche)
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm text-center group">
-                    <div className="text-marien-500 text-xs uppercase font-bold tracking-widest mb-2">Arbeitstage</div>
-                    <div className="text-5xl font-black text-marien-900 group-hover:scale-110 transition-transform">{weekStats.workDays}</div>
+                <div className="bg-marien-800 p-6 rounded-3xl border border-marien-700 shadow-float text-center group">
+                    <div className="text-marien-400 text-xs uppercase font-bold tracking-widest mb-2">Arbeitstage</div>
+                    <div className="text-5xl font-black text-white group-hover:scale-110 transition-transform">{weekStats.workDays}</div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm text-center group">
-                    <div className="text-marien-500 text-xs uppercase font-bold tracking-widest mb-2">Stunden</div>
-                    <div className="text-5xl font-black text-marien-900">{weekStats.totalTime}</div>
+                <div className="bg-marien-800 p-6 rounded-3xl border border-marien-700 shadow-float text-center group">
+                    <div className="text-marien-400 text-xs uppercase font-bold tracking-widest mb-2">Stunden</div>
+                    <div className="text-5xl font-black text-white">{weekStats.totalTime}</div>
                 </div>
-                <div className="bg-red-50 p-6 rounded-3xl border border-red-100 shadow-sm text-center group">
-                    <div className="text-red-400 text-xs uppercase font-bold tracking-widest mb-2">Überstunden</div>
-                    <div className="text-5xl font-black text-red-600">{weekStats.overtime}</div>
+                <div className="bg-marien-800 p-6 rounded-3xl border border-marien-700 shadow-float text-center group">
+                    <div className="text-fun-pink text-xs uppercase font-bold tracking-widest mb-2">Überstunden</div>
+                    <div className="text-5xl font-black text-fun-pink">{weekStats.overtime}</div>
                 </div>
            </div>
 
-           <div className="bg-white p-6 md:p-8 rounded-3xl border border-dashed border-marien-300/50 shadow-sm h-[350px] w-full relative mb-8">
-                <h3 className="text-lg font-bold text-gray-700 mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-marien-500"></span>Stundenverlauf (Mo-So)</h3>
+           <div className="bg-marien-800 p-6 md:p-8 rounded-3xl border border-marien-700 shadow-card h-[350px] w-full relative mb-8">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-marien-400"></span>Stundenverlauf (Mo-So)</h3>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={weekChartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} dy={10} fontSize={12} />
-                        <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} fontSize={12} />
-                        <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{ backgroundColor: '#fff', borderColor: '#e2e8f0', borderRadius: '12px' }} />
-                        <Bar dataKey="hours" fill="#14b8a6" radius={[4, 4, 0, 0]} barSize={30}>
-                            {weekChartData.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.hours > 8 ? '#f59e0b' : '#14b8a6'} />))}
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#134e4a" />
+                        <XAxis dataKey="name" stroke="#a7f3d0" tickLine={false} axisLine={false} dy={10} fontSize={12} />
+                        <YAxis stroke="#a7f3d0" tickLine={false} axisLine={false} fontSize={12} />
+                        <Tooltip 
+                            cursor={{fill: '#00211a'}} 
+                            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#0f172a', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', color: 'white' }}
+                        />
+                        <Bar dataKey="hours" fill="#2dd4bf" radius={[4, 4, 0, 0]} barSize={30}>
+                            {weekChartData.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.hours > 8 ? '#eab308' : '#2dd4bf'} />))}
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>
@@ -508,15 +552,15 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
            
            <div className="grid grid-cols-1 gap-4">
                {weekEvents.length > 0 && (
-                   <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-                       <h3 className="text-sm font-bold uppercase text-gray-400 tracking-widest mb-4">Termine dieser Woche</h3>
+                   <div className="bg-marien-800 p-6 rounded-3xl border border-marien-700 shadow-card">
+                       <h3 className="text-sm font-bold uppercase text-marien-400 tracking-widest mb-4">Termine dieser Woche</h3>
                        <div className="space-y-2">
                            {weekEvents.map(ev => (
-                               <div key={ev.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                               <div key={ev.id} className="flex items-center gap-3 p-3 bg-marien-900 rounded-xl">
                                     <span className="text-xl">{getEventSymbol(ev.typ)}</span>
                                     <div>
-                                        <div className="font-bold text-gray-800">{ev.titel}</div>
-                                        <div className="text-xs text-gray-500">{new Date(ev.datum).toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long' })}</div>
+                                        <div className="font-bold text-white">{ev.titel}</div>
+                                        <div className="text-xs text-marien-300">{new Date(ev.datum).toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long' })}</div>
                                     </div>
                                </div>
                            ))}
@@ -526,17 +570,22 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
            </div>
 
       </div>
-      )}
-
       {/* ================================================================================== */}
       {/* VIEW 3: MONTHLY STATISTICS (THE DASHBOARD MERGED) */}
       {/* ================================================================================== */}
-      {activeTab === 'monthly' && (
-      <div className="w-full max-w-6xl px-4 animate-fade-in">
+      <div 
+        id="monthly-stats-panel"
+        role="tabpanel"
+        className={`${activeTab === 'monthly' ? 'block' : 'hidden'} w-full max-w-6xl px-4 animate-fade-in`}
+      >
           
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-white p-6 rounded-3xl shadow-card border border-gray-100">
-             <h2 className="text-3xl font-black text-marien-900 uppercase tracking-tight">Monatsstatistik: {new Date(selectedDate).toLocaleString('de-DE', { month: 'long', year: 'numeric' })}</h2>
-             <Button variant="secondary" onClick={() => handleExportCsv(monthEntries, 'monatsexport.csv')} className="!rounded-full shadow-sm">💾 CSV Export</Button>
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6 bg-marien-900 p-6 rounded-3xl shadow-float border border-marien-700 text-white">
+             <h2 className="text-3xl font-black text-white uppercase tracking-tight">Monatsstatistik: {new Date(selectedDate).toLocaleString('de-DE', { month: 'long', year: 'numeric' })}</h2>
+             <Button 
+                onClick={() => handleExportCsv(monthEntries, 'monatsexport.csv')} 
+                className="bg-marien-700 hover:bg-marien-600 text-white shadow-md shadow-marien-700/30 !rounded-full">
+                💾 CSV Export
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -556,36 +605,42 @@ const ProtocolPage: React.FC<Props> = ({ selectedDate, onDateSelect }) => {
 
            <div className="space-y-8 mb-12">
                {/* CHART 1: HOURS */}
-               <div className="bg-white p-6 md:p-8 rounded-3xl border border-dashed border-marien-300/50 shadow-sm h-[350px] w-full relative">
-                    <h3 className="text-lg font-bold text-gray-700 mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-marien-500"></span>Arbeitszeitverlauf</h3>
+               <div className="bg-marien-800 p-6 md:p-8 rounded-3xl border border-marien-700 shadow-card h-[350px] w-full relative">
+                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-marien-400"></span>Arbeitszeitverlauf</h3>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={monthChartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                            <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} dy={10} fontSize={12} />
-                            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} fontSize={12} />
-                            <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{ backgroundColor: '#fff', borderColor: '#e2e8f0', borderRadius: '12px' }} />
-                            <Bar dataKey="hours" fill="#14b8a6" radius={[4, 4, 0, 0]} barSize={20}>
-                                {monthChartData.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.hours > 10 ? '#f59e0b' : '#14b8a6'} />))}
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#134e4a" />
+                            <XAxis dataKey="name" stroke="#a7f3d0" tickLine={false} axisLine={false} dy={10} fontSize={12} />
+                            <YAxis stroke="#a7f3d0" tickLine={false} axisLine={false} fontSize={12} />
+                            <Tooltip 
+                                cursor={{fill: '#00211a'}} 
+                                contentStyle={{ backgroundColor: '#1e293b', borderColor: '#0f172a', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', color: 'white' }}
+                            />
+                            <Bar dataKey="hours" fill="#2dd4bf" radius={[4, 4, 0, 0]} barSize={20}>
+                                {monthChartData.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.hours > 10 ? '#eab308' : '#2dd4bf'} />))}
                             </Bar>
                         </BarChart>
                     </ResponsiveContainer>
                </div>
 
                {/* CHART 2: MOOD */}
-               <div className="bg-white p-6 md:p-8 rounded-3xl border border-dashed border-fun-pink/30 shadow-sm h-[350px] w-full relative">
-                    <h3 className="text-lg font-bold text-gray-700 mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-fun-pink"></span>Stimmungsverlauf</h3>
+               <div className="bg-marien-800 p-6 md:p-8 rounded-3xl border border-marien-700 shadow-card h-[350px] w-full relative">
+                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-fun-pink/50"></span>Stimmungsverlauf</h3>
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={monthChartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
                             <defs>
                                 <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#ec4899" stopOpacity={0.3}/>
+                                    <stop offset="5%" stopColor="#ec4899" stopOpacity={0.4}/>
                                     <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                            <XAxis dataKey="name" stroke="#94a3b8" tickLine={false} axisLine={false} dy={10} fontSize={12} />
-                            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} domain={[0, 5]} ticks={[1,2,3,4,5]} fontSize={12} />
-                            <Tooltip cursor={{ stroke: '#ec4899', strokeWidth: 2 }} contentStyle={{ backgroundColor: '#fff', borderColor: '#e2e8f0', borderRadius: '12px' }} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#134e4a" />
+                            <XAxis dataKey="name" stroke="#a7f3d0" tickLine={false} axisLine={false} dy={10} fontSize={12} />
+                            <YAxis stroke="#a7f3d0" tickLine={false} axisLine={false} domain={[0, 5]} ticks={[1,2,3,4,5]} fontSize={12} />
+                            <Tooltip 
+                                cursor={{ stroke: '#ec4899', strokeWidth: 2 }} 
+                                contentStyle={{ backgroundColor: '#1e293b', borderColor: '#0f172a', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', color: 'white' }}
+                            />
                             <Area type="monotone" dataKey="moodScore" stroke="#ec4899" strokeWidth={3} fillOpacity={1} fill="url(#colorMood)" />
                         </AreaChart>
                     </ResponsiveContainer>

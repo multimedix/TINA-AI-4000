@@ -193,14 +193,14 @@ const Dashboard: React.FC = () => {
 
       <div className="mb-12 no-print">
         {!aiAnalysis ? (
-          <div className="bg-gradient-to-r from-marien-600 to-marien-800 p-1 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 w-full">
+          <div className="bg-gradient-to-r from-marien-950 to-marien-900 p-1 rounded-3xl shadow-xl shadow-marien-950/40 hover:shadow-2xl transition-all transform hover:-translate-y-1 w-full">
              <Button onClick={handleRunAi} disabled={loadingAi} className="w-full py-8 bg-marien-900/20 backdrop-blur-sm !text-white !text-2xl hover:bg-white/10 border-2 border-white/10 !rounded-2xl flex flex-col gap-2">
                <span className="text-4xl">✨</span>
                <span>{loadingAi ? "Analysiere Daten..." : "KI Analyse starten"}</span>
              </Button>
           </div>
         ) : (
-          <div className="bg-white p-8 rounded-3xl border-2 border-marien-500 shadow-float animate-fade-in relative overflow-hidden w-full">
+          <div className="bg-white p-8 rounded-3xl border-2 border-marien-700 shadow-float animate-fade-in relative overflow-hidden w-full">
              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-marien-400 via-fun-pink to-fun-purple"></div>
              <div className="flex justify-between items-start mb-6">
                <h3 className="text-2xl font-black text-marien-900 flex items-center gap-3">

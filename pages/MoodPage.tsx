@@ -220,7 +220,7 @@ const MoodPage: React.FC<Props> = ({ selectedDate: propDate }) => {
   if (!healthEntry) return <div className="p-8 text-center text-marien-600">Lade Gesundheitsdaten...</div>;
 
   return (
-    <div className="h-full overflow-y-auto p-4 md:p-8 bg-gradient-to-br from-marien-50 to-teal-50">
+    <div className="h-full overflow-y-auto p-4 md:p-8 bg-gray-100">
        <div className="max-w-4xl mx-auto pb-24 space-y-8">
           
           {/* HEADER */}
